@@ -1,19 +1,35 @@
-pragma solidity ^0.8.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts/token/ERC777/ERC777.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 
-/**
- * @title Simple777Token
- * @dev Very simple ERC777 Token example, where all tokens are pre-assigned to the creator.
- * Note they can later distribute these tokens as they wish using `transfer` and other
- * `ERC20` or `ERC777` functions.
- * Based on https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/examples/SimpleToken.sol
- */
-contract VegeCoin is ERC777 {
-    /**
-     * @dev Constructor that gives msg.sender all of existing tokens.
-     */
-    constructor() public ERC777("VegeCoin", "VGC", new address[](0)) {
-        _mint(msg.sender, msg.sender, 10000 * 10**18, "", "");
+contract VegeCoin is ERC20, Ownable, ERC20Permit, ERC20Votes {
+    constructor() ERC20("VegeCoin", "VGC") ERC20Permit("VegeCoin") {
+        _mint(msg.sender, 100000000 * 10**decimals());
+    }
+
+    function mint(address to, uint256 amount) public onlyOwner {
+        _mint(to, amount);
+    }
+
+    // The following functions are overrides required by Solidity.
+
+    function _afterTokenTransfer(
+        address from,
+        address to,
+        uint256 amount
+    ) internal override(ERC20, ERC20Votes) {
+        super._afterTokenTransfer(from, to, amount);
+    }
+
+    function _mint(address to, uint256 amount) internal override(ERC20, ERC20Votes) {
+        super._mint(to, amount);
+    }
+
+    function _burn(address account, uint256 amount) internal override(ERC20, ERC20Votes) {
+        super._burn(account, amount);
     }
 }
