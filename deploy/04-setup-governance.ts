@@ -26,7 +26,6 @@ const setupContracts: DeployFunction = async function (hre: HardhatRuntimeEnviro
   await executorTx.wait(1);
   const revokeTx = await timeLock.revokeRole(adminRole, deployer);
   await revokeTx.wait(1);
-  // Guess what? Now, anything the timelock wants to do has to go through the governance process!
 };
 
 export default setupContracts;
