@@ -13,7 +13,7 @@ const deployGovernance: DeployFunction = async function (hre: HardhatRuntimeEnvi
 
   log("----------------------------------------------------");
   log("Deploying Governance...");
-  const governance = await deploy("Governance", {
+  const governance = await deploy("VegeGovernor", {
     from: deployer,
     args: [Token.address, timeLock.address, QUORUM_PERCENTAGE, VOTING_PERIOD, VOTING_DELAY],
     log: true,

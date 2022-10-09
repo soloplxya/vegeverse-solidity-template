@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFractio
 import "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorSettings.sol";
 
-contract Governance is
+contract VegeGovernor is
     Governor,
     GovernorSettings,
     GovernorCountingSimple,
