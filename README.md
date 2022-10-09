@@ -1,4 +1,4 @@
-# Hardhat Template [![Open in Gitpod][gitpod-badge]][gitpod] [![Github Actions][gha-badge]][gha] [![Hardhat][hardhat-badge]][hardhat] [![License: MIT][license-badge]][license]
+# Vegeverse backend build with Solidity and Hardhat [![Open in Gitpod][gitpod-badge]][gitpod] [![Github Actions][gha-badge]][gha] [![Hardhat][hardhat-badge]][hardhat] [![License: MIT][license-badge]][license] (Adapted from Paulrberg/hardhat-template) 
 
 [gitpod]: https://gitpod.io/#https://github.com/soloplxya/vegeverse-solidity-template
 [gitpod-badge]: https://img.shields.io/badge/Gitpod-Open%20in%20Gitpod-FFB45B?logo=gitpod
@@ -8,20 +8,6 @@
 [hardhat-badge]: https://img.shields.io/badge/Built%20with-Hardhat-FFDB1C.svg
 [license]: https://opensource.org/licenses/MIT
 [license-badge]: https://img.shields.io/badge/License-MIT-blue.svg
-
-A Hardhat-based template for developing Solidity smart contracts, with sensible defaults.
-
-- [Hardhat](https://github.com/nomiclabs/hardhat): compile, run and test smart contracts
-- [TypeChain](https://github.com/ethereum-ts/TypeChain): generate TypeScript bindings for smart contracts
-- [Ethers](https://github.com/ethers-io/ethers.js/): renowned Ethereum library and wallet implementation
-- [Solhint](https://github.com/protofire/solhint): code linter
-- [Solcover](https://github.com/sc-forks/solidity-coverage): code coverage
-- [Prettier Plugin Solidity](https://github.com/prettier-solidity/prettier-plugin-solidity): code formatter
-
-## Getting Started
-
-Click the [`Use this template`](https://github.com/paulrberg/hardhat-template/generate) button at the top of the page to
-create a new repository with this repo as the initial state.
 
 ## Features
 
@@ -152,6 +138,12 @@ Deploy the contracts to Hardhat Network:
 ```sh
 $ yarn deploy --greeting "Bonjour, le monde!"
 ```
+
+## Deploy contracts and run tests
+```sh
+$ yarn hardhat node
+```
+
 
 ## Tips
 
