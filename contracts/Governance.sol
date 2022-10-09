@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/governance/Governor.sol";
-import "@openzeppelin/contracts/governance/extensions/GovernorSettings.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol";
+import "@openzeppelin/contracts/governance/extensions/GovernorSettings.sol";
 
 contract VegeGovernor is
     Governor,
@@ -16,19 +16,23 @@ contract VegeGovernor is
     GovernorVotesQuorumFraction,
     GovernorTimelockControl
 {
-    constructor(IVotes _token, TimelockController _timelock)
-        Governor("VegeGovernor")
+    constructor(
+        IVotes _token,
+        TimelockController _timelock,
+        uint256 _quorumPercentage,
+        uint256 _votingPeriod,
+        uint256 _votingDelay
+    )
+        Governor("GovernorContract")
         GovernorSettings(
-            1, /* 1 block */
-            100800, /* 2 week */
-            1e18
+            _votingDelay, /* 1 block */ // voting delay
+            _votingPeriod, // 45818, /* 1 week */ // voting period
+            0 // proposal threshold
         )
         GovernorVotes(_token)
-        GovernorVotesQuorumFraction(4)
+        GovernorVotesQuorumFraction(_quorumPercentage)
         GovernorTimelockControl(_timelock)
     {}
-
-    // The following functions are overrides required by Solidity.
 
     function votingDelay() public view override(IGovernor, GovernorSettings) returns (uint256) {
         return super.votingDelay();
@@ -38,6 +42,8 @@ contract VegeGovernor is
         return super.votingPeriod();
     }
 
+    // The following functions are overrides required by Solidity.
+
     function quorum(uint256 blockNumber)
         public
         view
@@ -45,6 +51,15 @@ contract VegeGovernor is
         returns (uint256)
     {
         return super.quorum(blockNumber);
+    }
+
+    function getVotes(address account, uint256 blockNumber)
+        public
+        view
+        override(IGovernor, Governor)
+        returns (uint256)
+    {
+        return super.getVotes(account, blockNumber);
     }
 
     function state(uint256 proposalId) public view override(Governor, GovernorTimelockControl) returns (ProposalState) {
