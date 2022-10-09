@@ -14,13 +14,8 @@ const deployToken: DeployFunction = async function (hre: HardhatRuntimeEnvironme
     from: deployer,
     args: [],
     log: true,
-    // we need to wait if on a live network so we can verify properly
-    // waitConfirmations: networkConfig[network.name].blockConfirmations || 1,
   });
   log(`Token at ${Token.address}`);
-  // if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
-  //     await verify(Token.address, [])
-  // }
   log(`Delegating to ${deployer}`);
   await delegate(Token.address, deployer);
   log("Delegated!");
